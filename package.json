@@ -131,9 +131,24 @@
   },
   "build": {
     "productName": "Webviz",
+    "mac": {
+      "target": "dmg",
+      "icon": "electron_deploy/icon.png"
+    },
+    "win": {
+      "target": "portable",
+      "icon": "electron_deploy/icon.png"
+    },
+    "linux": {
+      "target": "AppImage",
+      "icon": "electron_deploy/icon.png"
+    },
+    "directories": {
+      "output": "electron_dist"
+    },
     "files": [
       "electron_deploy/**/*",
-      "node_modules/**/*"
+      "!docs/**/*"
     ]
   },
   "workspaces": [
