@@ -1,8 +1,6 @@
 {
   "name": "root",
   "private": true,
-  "version": "0.0.1",
-  "main": "electron_deploy/webviz-electron.js",
   "devDependencies": {
     "@babel/cli": "^7.1.5",
     "@babel/core": "^7.2.0",
@@ -129,6 +127,8 @@
     "preelectron-pack": "npm run electron-build && npm run electron-deploy",
     "electron-pack": "build"
   },
+  "main": "electron_deploy/webviz-electron.js",
+  "version": "0.0.1",
   "build": {
     "productName": "Webviz",
     "mac": {

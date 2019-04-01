@@ -56,7 +56,7 @@ module.exports = {
   },
   output: {
     path: path.resolve(`${__dirname}/docs/public/dist`),
-    publicPath: process.env.DEV_SERVER ? "/dist/" : (process.env.ELEC_ENV ? path.join(__dirname, '/electron_deploy/dist/') : "/webviz/dist/"),
+    publicPath: process.env.DEV_SERVER ? "/dist/" : "/webviz/dist/",
     pathinfo: true,
     filename: "[name].js",
     devtoolModuleFilenameTemplate: (info) => path.resolve(info.absoluteResourcePath),
@@ -174,4 +174,8 @@ if (process.env.NODE_ENV === "production") {
   module.exports.entry.docs = [module.exports.entry.docs, "webpack-hot-middleware/client"];
   module.exports.plugins.push(new webpack.HotModuleReplacementPlugin());
   module.exports.output.globalObject = "this"; // Workaround for https://github.com/webpack/webpack/issues/6642#issuecomment-370222543
+}
+
+if (process.env.ELEC_ENV) {
+  module.exports.output.publicPath = "dist/"; // Fix for Electron local file paths
 }
