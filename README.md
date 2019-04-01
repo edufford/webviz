@@ -28,6 +28,13 @@ If you have the right permissions, you can publish:
 - `npm run publish` to publish npm packages.
 - `npm run docs-deploy` to deploy that statically hosted website (this is also done automatically in CI on the master branch).
 
+#### Electron Packaged App
+
+To package the core Webviz app into a stand-alone Electron application for offline ROS bag analysis (*currently only tested for Mac*), use the following commands:
+
+1. `npm run bootstrap` to install dependencies.
+2. `npm run electron-pack` to build the project, webpack it, deploy the files to the `electron_deploy/` folder, and package this into an Electron app in the `electron_dist/` folder.
+
 ## Contributing
 
 PRs, bug reports, and feature requests are welcome! Please observe [CONTRIBUTING.md](CONTRIBUTING.md) and [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) when making a contribution.
