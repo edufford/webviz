@@ -13,7 +13,7 @@ function createWindow() {
     icon: path.join(__dirname, "icon.png"),
   });
 
-  mainWindow.loadURL(`file://${path.join(__dirname, "webviz-core.html")}`);
+  mainWindow.loadURL(`file://${path.join(__dirname, "webviz/webviz-core.html")}`);
   // mainWindow.webContents.openDevTools();
   mainWindow.on("closed", () => (mainWindow = null));
 }
