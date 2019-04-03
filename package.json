@@ -128,12 +128,16 @@
     "electron-pack": "build"
   },
   "main": "electron_deploy/webviz-electron.js",
-  "version": "0.0.1",
+  "version": "0.0.0",
   "build": {
     "productName": "Webviz",
+    "artifactName": "${productName}.${ext}",
     "mac": {
       "target": "dmg",
       "icon": "electron_deploy/icon.png"
+    },
+    "dmg": {
+      "title": "${productName}"
     },
     "win": {
       "target": "portable",
