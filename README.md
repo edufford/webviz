@@ -30,7 +30,7 @@ If you have the right permissions, you can publish:
 
 #### Electron Packaged App
 
-To package the core Webviz app into a stand-alone Electron application for offline ROS bag analysis (*currently only tested for Mac*), use the following commands:
+To package the core Webviz app into a stand-alone Electron application for offline ROS bag analysis (*currently only tested for Mac and Ubuntu Linux targets*), use the following commands:
 
 1. `npm run bootstrap` to install dependencies.
 2. `npm run electron-pack` to build the project, webpack it, deploy the files to the `electron_deploy/` folder, and package this into an Electron app in the `electron_dist/` folder.
