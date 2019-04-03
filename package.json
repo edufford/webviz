@@ -123,7 +123,7 @@
     "screenshot-debug": "npm run screenshot -- --parallel 1 --debug --puppeteer-launch-config '{\"headless\": false}'",
     "ci": "npm run install-ci && NODE_ENV=production npm run build && npm run lint && npm run flow && npm test && NODE_ENV=production npm run screenshot-ci",
     "electron-build": "NODE_ENV=production ELEC_ENV=true npm run build",
-    "electron-deploy": "cp -r docs/public/ electron_deploy/webviz && cp -f packages/webviz-core/public/index.html electron_deploy/webviz/webviz-core.html && cp -f packages/webviz-core/node_modules/wasm-lz4/wasm-lz4.wasm electron_deploy/webviz/dist/wasm-lz4.wasm",
+    "electron-deploy": "cp -r docs/public/ electron_deploy/webviz && rm electron_deploy/webviz/webviz-core.html && cp packages/webviz-core/public/index.html electron_deploy/webviz/webviz-core.html && rm electron_deploy/webviz/dist/wasm-lz4.wasm && cp packages/webviz-core/node_modules/wasm-lz4/wasm-lz4.wasm electron_deploy/webviz/dist/wasm-lz4.wasm",
     "preelectron-pack": "npm run electron-build && npm run electron-deploy",
     "electron-pack": "build"
   },
