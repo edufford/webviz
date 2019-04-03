@@ -176,6 +176,6 @@ if (process.env.NODE_ENV === "production") {
   module.exports.output.globalObject = "this"; // Workaround for https://github.com/webpack/webpack/issues/6642#issuecomment-370222543
 }
 
-if (process.env.ELEC_ENV) {
+if (process.env.ELEC_ENV === "true") {
   module.exports.output.publicPath = "dist/"; // Fix for Electron local file paths
 }
