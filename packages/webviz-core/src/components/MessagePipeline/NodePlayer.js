@@ -103,7 +103,7 @@ export default class NodePlayer implements Player {
   startPlayback = () => this._player.startPlayback();
   pausePlayback = () => this._player.pausePlayback();
   setPlaybackSpeed = (speed: number) => this._player.setPlaybackSpeed(speed);
-  seekPlayback = (time: Time) => this._player.seekPlayback(time);
+  seekPlayback = (time: Time, shiftPressed: boolean) => this._player.seekPlayback(time, shiftPressed);
 
   getUnderlyingPlayer() {
     if (process.env.NODE_ENV !== "test") {

@@ -67,11 +67,12 @@ const TooltipItem = ({ title, value }) => (
 export class UnconnectedPlaybackControls extends React.PureComponent<Props> {
   el: ?HTMLDivElement;
   slider: ?Slider;
+  _shiftPressed: boolean = false;
 
   onChange = (value: number) => {
     const { seek } = this.props;
     const time = fromSec(value);
-    seek(time);
+    seek(time, this._shiftPressed);
   };
 
   keyDownHandlers = {
@@ -83,6 +84,19 @@ export class UnconnectedPlaybackControls extends React.PureComponent<Props> {
       } else {
         play();
       }
+    },
+    // Shift key to trigger sticky-start seek
+    "Shift": () => {
+      this._shiftPressed = true;
+      // console.log("Shift key down", this._shiftPressed);
+    },
+  };
+
+  keyUpHandlers = {
+    // Shift key to trigger sticky-start seek
+    "Shift": () => {
+      this._shiftPressed = false;
+      // console.log("Shift key up", this._shiftPressed);
     },
   };
 
@@ -156,7 +170,7 @@ export class UnconnectedPlaybackControls extends React.PureComponent<Props> {
 
     return (
       <Flex row className={styles.container}>
-        <KeyListener global keyDownHandlers={this.keyDownHandlers} />
+        <KeyListener global keyDownHandlers={this.keyDownHandlers} keyUpHandlers={this.keyUpHandlers} />
         <div className={styles.playIconWrapper} onClick={isPlaying ? pause : play}>
           <Icon large>{isPlaying ? <PauseIcon /> : <PlayIcon />}</Icon>
         </div>

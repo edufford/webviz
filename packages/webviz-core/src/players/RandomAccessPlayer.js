@@ -60,6 +60,8 @@ export default class RandomAccessPlayer implements Player {
   _messages: Message[] = [];
   _lastEmitPromise: Promise<void> = Promise.resolve();
   _hasSetEmitStateCallback: boolean = false;
+  _isStickySeeking: boolean = false;
+  _startSticky: Time;
 
   constructor(
     provider: RandomAccessDataProvider,
@@ -88,6 +90,7 @@ export default class RandomAccessPlayer implements Player {
       })
       .then(({ start, end, topics, datatypes }) => {
         this._start = start;
+        this._startSticky = start;
         // Since _currentTime is defined as the end of the last range that we emitted messages for
         // (inclusive), we have to subtract 1 nanosecond at the start, otherwise we might
         // double-emit messages with a receiveTime that is exactly equal to _currentTime.
@@ -283,15 +286,25 @@ export default class RandomAccessPlayer implements Player {
     this._emitState();
   }
 
-  seekPlayback(time: Time): void {
+  seekPlayback(time: Time, shiftPressed: boolean): void {
+    if (shiftPressed && !this._isStickySeeking) {
+      this._isStickySeeking = true;
+      this._startSticky = this._currentTime;
+    } else if ((!shiftPressed && this._isStickySeeking) ||
+               TimeUtil.isLessThan(time, this._startSticky)) {
+      this._isStickySeeking = false;
+    }
+
     this._currentTime = time;
     this._metricsCollector.seek();
     const seekTime = Date.now();
     this._lastSeekTime = seekTime;
     this._emitState();
 
-    if (!this._isPlaying) {
-      this._getMessages(TimeUtil.add(time, { sec: 0, nsec: -SEEK_BACK_NANOSECONDS }), time).then((messages) => {
+    if (!this._isPlaying || this._isStickySeeking) {
+      const startTime = this._isStickySeeking ? this._startSticky : TimeUtil.add(time, { sec: 0, nsec: -SEEK_BACK_NANOSECONDS });
+
+      this._getMessages(startTime, time).then((messages) => {
         if (seekTime === this._lastSeekTime) {
           this._messages = messages;
           this._emitState();

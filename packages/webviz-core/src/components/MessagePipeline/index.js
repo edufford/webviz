@@ -42,7 +42,7 @@ export type MessagePipelineContext = {|
   startPlayback(): void,
   pausePlayback(): void,
   setPlaybackSpeed(speed: number): void,
-  seekPlayback(time: Time): void,
+  seekPlayback(time: Time, shiftPressed: boolean): void,
 |};
 
 const Context: React.Context<?MessagePipelineContext> = React.createContext();
@@ -149,7 +149,7 @@ export function MessagePipelineProvider({ children, player }: ProviderProps) {
         startPlayback: useCallback(() => (player ? player.startPlayback() : undefined)),
         pausePlayback: useCallback(() => (player ? player.pausePlayback() : undefined)),
         setPlaybackSpeed: useCallback((speed: number) => (player ? player.setPlaybackSpeed(speed) : undefined)),
-        seekPlayback: useCallback((time: Time) => (player ? player.seekPlayback(time) : undefined)),
+        seekPlayback: useCallback((time: Time, shiftPressed: boolean) => (player ? player.seekPlayback(time, shiftPressed) : undefined)),
       }}>
       {children}
     </Context.Provider>

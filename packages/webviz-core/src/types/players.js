@@ -139,7 +139,7 @@ export interface Player {
   startPlayback(): void;
   pausePlayback(): void;
   setPlaybackSpeed(speed: number): void;
-  seekPlayback(time: Time): void;
+  seekPlayback(time: Time, shiftPressed: boolean): void;
 }
 
 export interface PlayerMetricsCollectorInterface {
